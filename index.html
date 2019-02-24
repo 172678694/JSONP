@@ -14,12 +14,16 @@
     <script>
         button.addEventListener('click', function () {
             let script = document.createElement('script')
-            functionName = 'jquery' + parseInt(Math.random() * 10000000, 10)
-            window[functionName] = function () {
-                amount.innerText = amount.innerText - 1
-            }
             script.src = 'http://jack.com/pay?callback=' + functionName
             body.appendChild(script)
+            functionName = 'jquery' + parseInt(Math.random() * 10000000, 10)
+            window[functionName] = function (result) {
+                if(result==='success'){
+                    amount.innerText = amount.innerText - 1
+                }else{
+                    alert('支付失败')
+                }
+            }
 
             script.onload = function (e) {
                 e.currentTarget.remove()
